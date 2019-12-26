@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-26 00:10:17
-@LastEditTime: 2019-12-26 15:47:51
+@LastEditTime: 2019-12-26 16:09:19
 '''
 
 import re
@@ -64,7 +64,7 @@ class Parser(object):
         parser.add_argument("-t", dest="thread_num", type=int, default=10, 
                             help="the number of threads, default 10")
         parser.add_argument("-T", dest="timeout", type=int, default=10, 
-                            help="wait time per login attempt over all threads")
+                            help="wait time per login attempt over all threads, default 10s")
         # args = parser.parse_args()
         # parser.print_help()
 
