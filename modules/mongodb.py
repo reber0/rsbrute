@@ -35,7 +35,8 @@ class MongoDBBruteForce(object):
     def worker(self,hpup):
         host,port,user,pwd = hpup
         try:
-            mongo = MongoClient(host=host,port=port,username=user,password=pwd,authSource='admin',serverSelectionTimeoutMS=self.timeout)
+            mongo = MongoClient(host=host,port=port,username=user,password=pwd,
+                                authSource='admin',serverSelectionTimeoutMS=self.timeout)
             dblist = mongo.list_database_names()
         except Exception as e:
             hook_msg((False,host,port,user,pwd))
