@@ -21,7 +21,8 @@ class PgSQLBruteForce(object):
     def worker(self,hpup):
         host,port,user,pwd = hpup
         try:
-            conn = psycopg2.connect(host=host,port=port,user=user,password=pwd,connect_timeout=self.timeout)
+            conn = psycopg2.connect(host=host,port=port,user=user,password=pwd,
+                                    connect_timeout=self.timeout)
         except Exception as e:
             hook_msg((False,host,port,user,pwd))
             # logger.error(str(e))
