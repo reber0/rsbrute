@@ -26,7 +26,8 @@ class RedisBruteForce(object):
             s.send("INFO\r\n".encode())
             result = s.recv(1024)
         except Exception as e:
-            print("{} {}".format(host,e))
+            hook_msg((False,host,port,"Anonymous",""))
+            # print("{} {}".format(host,e))
         else:
             if "redis_version".encode() in result:
                 hook_msg((True,host,port,"Anonymous",""))

@@ -25,7 +25,8 @@ class MemcacheBruteForce(object):
             memcache = Client(server=(host,port), connect_timeout=self.timeout, timeout=self.timeout)
             version = memcache.version()
         except Exception as e:
-            print(str(e))
+            hook_msg((False,host,port, "Anonymous", ""))
+            # print(str(e))
         else:
             if version:
                 hook_msg((True,host,port, "Anonymous", ""))

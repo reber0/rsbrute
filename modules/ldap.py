@@ -32,7 +32,8 @@ class LdapBruteForce(object):
             s.send(data)
             result = s.recv(1024)
         except Exception as e:
-            print(str(e))
+            hook_msg((False,host,port, "Anonymous", ""))
+            # print(str(e))
         else:
             if "invalid" in str(result):
                 hook_msg((True,host,port,"Anonymous",""))

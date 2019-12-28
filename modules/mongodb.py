@@ -25,7 +25,8 @@ class MongoDBBruteForce(object):
             mongo = MongoClient(host=host,port=port,serverSelectionTimeoutMS=self.timeout)
             dblist = mongo.list_database_names()
         except Exception as e:
-            print(str(e))
+            hook_msg((False,host,port,"Anonymous",""))
+            # print(str(e))
         else:
             hook_msg((True,host,port,"Anonymous",""))
             self.unauth_result.append(host)
