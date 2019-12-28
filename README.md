@@ -25,6 +25,7 @@
       ```
       unzip x instantclient-basiclite-macos.x64-11.2.0.4.0.zip
       sudo mkdir /opt/oracle && sudo mv instantclient_11_2 /opt/oracle
+      cd /opt/oracle/instantclient_11_2
       ln -s libclntsh.dylib.11.1 libclntsh.dylib
       ln -s libocci.dylib.11.1 libocci.dylib
       ```
