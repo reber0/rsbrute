@@ -1,6 +1,7 @@
 bcrypt==3.1.7
 cffi==1.13.2
 colorlog==4.0.2
+cx_Oracle==7.3.0
 cryptography==2.8
 IPy==1.0
 ldap3==2.6.1
