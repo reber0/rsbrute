@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-26 00:10:17
-@LastEditTime: 2019-12-31 12:33:29
+@LastEditTime: 2019-12-31 12:46:57
 '''
 
 import re
@@ -24,51 +24,52 @@ class Parser(object):
     """Parser"""
     def __init__(self):
         super(Parser, self).__init__()
-        self.service_type_list = [
+        self.parser = self.parser()
+        self.args = self.parser.parse_args().__dict__
+
+    def parser(self):
+        service_type_list = [
             "ssh","ftp", #telent,rlogin
             "mysql","mssql","oracle","pgsql","redis","mongodb","memcache",
             "ldap","winrm", #"vnc","rdp","smb","snmp"
             # "smpt","pop",
         ]
-        self.example = """Examples:
+        example = """Examples:
                           \r  python3 {shell_name} -s ssh -i 59.108.35.123
                           \r  python3 {shell_name} -s ssh -i 192.168.3.123 -l root -p 123456
                           \r  python3 {shell_name} -s ssh -i 192.168.3.123 -l root -P pwd_dict.txt
                           """
-        self.parser = self.parser()
-        self.args = self.parser.parse_args().__dict__
 
-    def parser(self):
-        self.parser = argparse.ArgumentParser(
+        parser = argparse.ArgumentParser(
             formatter_class=argparse.RawDescriptionHelpFormatter,#使 example 可以换行
             add_help=True,
             # description = "常见服务口令爆破",
             )
-        self.parser.epilog = self.example.format(shell_name=self.parser.prog)
-        self.parser.add_argument("-i", dest="host", type=str, 
+        parser.epilog = example.format(shell_name=parser.prog)
+        parser.add_argument("-i", dest="host", type=str, 
                             help="target ip")
-        self.parser.add_argument("-iL", dest="host_file", type=str, 
+        parser.add_argument("-iL", dest="host_file", type=str, 
                             help="target file name, one ip per line")
-        self.parser.add_argument("-l", dest="user", type=str, 
+        parser.add_argument("-l", dest="user", type=str, 
                             help="login with LOGIN username")
-        self.parser.add_argument("-p", dest="pwd", type=str, 
+        parser.add_argument("-p", dest="pwd", type=str, 
                             help="login with LOGIN password")
-        self.parser.add_argument("-C", dest="user_pwd_file", type=str, 
+        parser.add_argument("-C", dest="user_pwd_file", type=str, 
                             help="colon separated \"login:pass\" format, instead of -L/-P")
-        self.parser.add_argument("-L", dest="user_file", type=str, 
+        parser.add_argument("-L", dest="user_file", type=str, 
                             help="load several usernames from FILE")
-        self.parser.add_argument("-P", dest="pwd_file", type=str, 
+        parser.add_argument("-P", dest="pwd_file", type=str, 
                             help="load several passwords from FILE")
-        self.parser.add_argument("--port", dest="port", type=int, 
+        parser.add_argument("--port", dest="port", type=int, 
                             help="give the target port")
-        self.parser.add_argument("-s", dest="service_type", type=str, required=True, 
-                            choices=self.service_type_list, help="the type of service to scan")
-        self.parser.add_argument("-t", dest="thread_num", type=int, default=10, 
+        parser.add_argument("-s", dest="service_type", type=str, required=True, 
+                            choices=service_type_list, help="the type of service to scan")
+        parser.add_argument("-t", dest="thread_num", type=int, default=10, 
                             help="the number of threads, default 10")
-        self.parser.add_argument("-T", dest="timeout", type=int, default=10, 
+        parser.add_argument("-T", dest="timeout", type=int, default=10, 
                             help="wait time per login attempt over all threads, default 10s")
 
-        return self.parser
+        return parser
 
     @staticmethod
     def init():
