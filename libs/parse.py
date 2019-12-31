@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-26 00:10:17
-@LastEditTime: 2019-12-31 12:46:57
+@LastEditTime: 2019-12-31 12:58:47
 '''
 
 import re
@@ -13,10 +13,8 @@ from IPy import IP
 
 from libs.utils import file_is_exist
 from libs.mylog import MyLog
-
 from config import log_level
-
-logger = MyLog(loglevel=log_level, logger_name="is file exist")
+logger = MyLog(loglevel=log_level, logger_name="check parames")
 
 import argparse
 
