@@ -4,10 +4,10 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-12-31 14:34:20
-@LastEditTime: 2019-12-31 15:45:04
+@LastEditTime: 2019-12-31 16:47:35
 '''
 
-from concurrent.futures import ThreadPoolExecutor, TimeoutError,as_completed
+from concurrent.futures import ThreadPoolExecutor
 
 class BruteBaseClass(object):
     """BruteForce BaseClass"""
