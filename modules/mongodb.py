@@ -4,21 +4,16 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-25 21:11:15
-@LastEditTime: 2019-12-13 16:36:14
+@LastEditTime: 2019-12-31 15:51:08
 '''
 
 import socket
 from pymongo import MongoClient
 from concurrent.futures import ThreadPoolExecutor
+from libs.brute import BruteBaseClass
 
-class MongoDBBruteForce(object):
+class MongoDBBruteForce(BruteBaseClass):
     """MongoDBBruteForce"""
-    def __init__(self, targets, thread_num, timeout):
-        super(MongoDBBruteForce, self).__init__()
-        self.targets = targets
-        self.thread_num = thread_num
-        self.timeout = timeout
-        self.unauth_result = list()
 
     def check_unauth(self,host,port):
         try:
@@ -45,19 +40,6 @@ class MongoDBBruteForce(object):
             hook_msg((True,host,port,user,pwd))
         finally:
             mongo.close()
-    
-    def run(self):
-        socket.setdefaulttimeout(self.timeout)
-
-        ip_port_list = set([(x[0],x[1]) for x in self.targets])
-        for ip,port in ip_port_list:
-            self.check_unauth(ip,port)
-
-        with ThreadPoolExecutor(max_workers = self.thread_num) as executor:
-            for host,port,user,pwd in self.targets:
-                if host not in self.unauth_result:
-                    f = executor.submit(self.worker,(host,port,user,pwd))
-                # f.add_done_callback(call_back)
 
 
 bruter = MongoDBBruteForce

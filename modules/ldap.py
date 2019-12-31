@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-25 21:11:15
-@LastEditTime: 2019-12-13 16:33:10
+@LastEditTime: 2019-12-31 15:48:27
 '''
 
 import socket
@@ -13,18 +13,13 @@ from ldap3 import Server
 from ldap3 import Connection
 from ldap3 import ALL
 from concurrent.futures import ThreadPoolExecutor
+from libs.brute import BruteBaseClass
 
-
-class LdapBruteForce(object):
+class LdapBruteForce(BruteBaseClass):
     """LdapBruteForce"""
-    def __init__(self, targets, thread_num, timeout):
-        super(LdapBruteForce, self).__init__()
-        self.targets = targets
-        self.thread_num = thread_num
-        self.timeout = timeout
-        self.unauth_result = list()
 
     def check_unauth(self,host,port):
+        socket.setdefaulttimeout(self.timeout)
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((host, port))
@@ -56,20 +51,6 @@ class LdapBruteForce(object):
                 hook_msg((True,host,port,user,pwd))
         finally:
             s.close()
-
-    def run(self):
-        socket.setdefaulttimeout(self.timeout)
-
-        ip_port_list = set([(x[0],x[1]) for x in self.targets])
-        for ip,port in ip_port_list:
-            self.check_unauth(ip,port)
-
-        with ThreadPoolExecutor(max_workers = self.thread_num) as executor:
-            for host,port,user,pwd in self.targets:
-                if host not in self.unauth_result:
-                    f = executor.submit(self.worker,(host,port,user,pwd))
-                # f.add_done_callback(call_back)
-
 
 
 #python3 main.py -s ldap -i 10.11.11.18 -l 'reber\\administrator' -p Aa123456. -P 389

@@ -4,11 +4,13 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-12-26 14:00:25
-@LastEditTime: 2019-12-26 14:59:59
+@LastEditTime: 2019-12-31 15:50:29
 '''
 
 import winrm
 from concurrent.futures import ThreadPoolExecutor
+from libs.brute import BruteBaseClass
+
 
 class WinrmBruteForce(object):
     """WinrmBruteForce"""
