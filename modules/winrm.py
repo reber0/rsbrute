@@ -4,23 +4,21 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-12-26 14:00:25
-@LastEditTime: 2019-12-31 15:50:29
+@LastEditTime: 2019-12-31 16:50:56
 '''
 
+import socket
 import winrm
 from concurrent.futures import ThreadPoolExecutor
 from libs.brute import BruteBaseClass
 
 
-class WinrmBruteForce(object):
+class WinrmBruteForce(BruteBaseClass):
     """WinrmBruteForce"""
-    def __init__(self, targets, thread_num, timeout):
-        super(WinrmBruteForce, self).__init__()
-        self.targets = targets
-        self.thread_num = thread_num
-        self.timeout = timeout
 
     def worker(self,hpup):
+        socket.setdefaulttimeout(self.timeout)
+
         host,port,user,pwd = hpup
         try:
             s = winrm.Session("http://{}:{}/wsman".format(host,port),auth=(user,pwd))
@@ -31,12 +29,6 @@ class WinrmBruteForce(object):
             hook_msg((True,host,port,user,pwd))
         finally:
             ssh.close()
-
-    def run(self):
-        with ThreadPoolExecutor(max_workers = self.thread_num) as executor:
-            for host,port,user,pwd in self.targets:
-                f = executor.submit(self.worker,(host,port,user,pwd))
-                # f.add_done_callback(call_back)
 
 
 bruter = WinrmBruteForce
