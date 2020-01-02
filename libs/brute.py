@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-12-31 14:34:20
-@LastEditTime: 2020-01-02 12:41:43
+@LastEditTime: 2020-01-02 21:38:09
 '''
 
 from concurrent.futures import ThreadPoolExecutor
@@ -30,7 +30,7 @@ class BruteBaseClass(object):
         try:
             with ThreadPoolExecutor(max_workers = self.thread_num) as executor:
                 for ip,port in ip_port_list:
-                    f = executor.submit(self.check_unauth,(ip,port))
+                    f = executor.submit(self.check_unauth,ip,port)
         except KeyboardInterrupt:
             print('user aborted !')
             self.flag = False
