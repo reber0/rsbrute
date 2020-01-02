@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-25 21:11:15
-@LastEditTime: 2019-12-31 15:39:03
+@LastEditTime: 2020-01-02 11:24:22
 '''
 
 from ftplib import FTP
@@ -13,6 +13,20 @@ from libs.brute import BruteBaseClass
 
 class FtpBruteForce(BruteBaseClass):
     """FtpBruteForce"""
+
+    def check_unauth(self,host,port):
+        try:
+            ftp = FTP()
+            ftp.connect(host, port, timeout=self.timeout)
+            ftp.login()
+        except Exception as e:
+            hook_msg((False,host,port, "Anonymous", ""))
+            # print(str(e))
+        else:
+            hook_msg((True,host,port,"Anonymous",""))
+            self.unauth_result.append(host)
+        finally:
+            ftp.close()
 
     def worker(self,hpup):
         host,port,user,pwd = hpup
