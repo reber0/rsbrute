@@ -35,6 +35,7 @@ admin888
 administrator
 administrator123
 root123
+123
 123456
 password
 12345
