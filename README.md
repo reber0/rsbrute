@@ -5,7 +5,7 @@
 ### 安装
 * pip install -r requirements.txt
 
-* 设置 oracle(爆破 oracle 的话需要进行下面的设置)
+* 设置 oracle(爆破 oracle 的话需要进行下面的设置(macOS Mojave))
 
   * pip3 install cx_Oracle
 
