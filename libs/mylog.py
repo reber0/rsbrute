@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-07-16 22:31:00
-@LastEditTime: 2020-01-10 10:05:15
+@LastEditTime: 2020-01-10 10:28:53
 '''
 
 import logging
@@ -54,7 +54,7 @@ class MyLog(object):
                 'ERROR': 'red',
                 'WARNING': 'yellow',
                 'INFO': 'green',
-                'DEBUG': 'blue',
+                'DEBUG': 'white',
             },
             secondary_log_colors={},
             style='%'
@@ -82,7 +82,7 @@ if __name__ == '__main__':
     # 等级为 INFO 则只会输出级别大于等于 INFO 的日志
     # DEBUG < INFO < WARNING < ERROR < CRITICAL
 
-    logger = MyLog(loglevel='NOTSET', logger_name='test', logfile='log.txt')
+    logger = MyLog(loglevel='NOTSET', logger_name='test', logfile='test.log')
     logger.critical('critical')
     logger.error('error')
     logger.warning('warning')
