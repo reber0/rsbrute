@@ -4,16 +4,19 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-07-16 22:31:00
-@LastEditTime: 2019-12-13 15:54:57
+@LastEditTime: 2020-01-10 10:05:15
 '''
 
 import logging
 import colorlog
 
 class MyLog(object):
+    """
+    MyLog(loglevel, logger_name, logfile=None)
+    """
     def __init__(self, loglevel, logger_name, logfile=None):
         # 创建一个 logger
-        self.logger = colorlog.getLogger(logger_name)
+        self.logger = logging.getLogger(logger_name)
         self.logger.setLevel(logging.DEBUG)
 
         #设置日志输出等级，后面创建 Handler 然后 setLevel(logging.DEBUG) 也不能输出 WARNING 等级之下的日志
@@ -39,7 +42,7 @@ class MyLog(object):
 
     def __stream_hander(self, loglevel):
         # 创建一个用于输出到控制台的 handler
-        sh = colorlog.StreamHandler()
+        sh = logging.StreamHandler()
         sh.setLevel(loglevel)
         formatter = colorlog.ColoredFormatter(
             # '%(log_color)s[%(asctime)s] [%(levelname)s] %(message)s %(reset)s',
