@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-07-16 22:31:00
-@LastEditTime: 2020-01-10 10:28:53
+@LastEditTime: 2020-01-16 09:36:12
 '''
 
 import logging
@@ -50,11 +50,11 @@ class MyLog(object):
             datefmt="%H:%M:%S",
             reset=True,
             log_colors={
-                'CRITICAL': 'white,bg_red',
-                'ERROR': 'red',
-                'WARNING': 'yellow',
-                'INFO': 'green',
-                'DEBUG': 'white',
+                'DEBUG':    'cyan',
+                'INFO':     'green',
+                'WARNING':  'yellow',
+                'ERROR':    'red',
+                'CRITICAL': 'red,bg_white',
             },
             secondary_log_colors={},
             style='%'
