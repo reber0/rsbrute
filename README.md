@@ -100,21 +100,3 @@ Examples:
 [22:27:18] [-] 10.11.11.11 22 reber mysql 
 [('10.11.11.11', 22, 'reber', '123456')]
 ```
-
-### 引用
-
-```
-import sys
-sys.path.append('/path/to/Rsbrute')
-
-from Rsbrute import ComHostPortUserPwd
-from Rsbrute import LoadModule
-
-args = {"host":"59.108.35.198", "port":22, "service_type":"ssh", "user":"reber", "pwd_file":"a.txt"}
-chpup = ComHostPortUserPwd(args)
-hpup = chpup.generate()
-# print(hpup)
-
-lm = LoadModule(args)
-result = lm.start_brute(hpup)
-```
