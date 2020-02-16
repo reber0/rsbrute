@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-25 21:11:15
-@LastEditTime: 2020-01-02 12:52:00
+@LastEditTime : 2020-02-16 18:37:19
 '''
 
 import socket
@@ -13,7 +13,11 @@ from ldap3 import Server
 from ldap3 import Connection
 from ldap3 import ALL
 from concurrent.futures import ThreadPoolExecutor
-from libs.brute import BruteBaseClass
+
+try:
+    from libs.brute import BruteBaseClass
+except ModuleNotFoundError:
+    from Rsbrute.libs.brute import BruteBaseClass
 
 class LdapBruteForce(BruteBaseClass):
     """LdapBruteForce"""

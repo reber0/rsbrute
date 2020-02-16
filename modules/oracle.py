@@ -4,16 +4,22 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-25 21:11:15
-@LastEditTime: 2020-01-03 11:03:30
+@LastEditTime : 2020-02-16 18:38:16
 '''
 
 import socket
 import cx_Oracle
 from concurrent.futures import ThreadPoolExecutor
 
-from config import dict_path
-from libs.utils import get_content
-from libs.brute import BruteBaseClass
+try:
+    from config import dict_path
+    from libs.utils import get_content
+    from libs.brute import BruteBaseClass
+except ModuleNotFoundError:
+    from Rsbrute.config import dict_path
+    from Rsbrute.libs.utils import get_content
+    from Rsbrute.libs.brute import BruteBaseClass
+
 
 class OracleBruteForce(BruteBaseClass):
     """OracleBruteForce"""

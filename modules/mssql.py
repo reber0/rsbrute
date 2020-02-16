@@ -4,12 +4,16 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-25 21:11:15
-@LastEditTime: 2020-01-02 12:52:50
+@LastEditTime : 2020-02-16 18:37:40
 '''
 
 import pymssql
 from concurrent.futures import ThreadPoolExecutor
-from libs.brute import BruteBaseClass
+
+try:
+    from libs.brute import BruteBaseClass
+except ModuleNotFoundError:
+    from Rsbrute.libs.brute import BruteBaseClass
 
 class MsSQLBruteForce(BruteBaseClass):
     """MsSQLBruteForce"""

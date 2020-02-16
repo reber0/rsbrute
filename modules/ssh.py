@@ -4,15 +4,20 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-05-22 15:30:07
-@LastEditTime: 2020-01-02 12:51:40
+@LastEditTime : 2020-02-16 18:34:28
 '''
 
+import pathlib
 import paramiko
 from concurrent.futures import ThreadPoolExecutor
-from libs.brute import BruteBaseClass
 
-import pathlib
-from config import log_file_path
+try:
+    from libs.brute import BruteBaseClass
+    from config import log_file_path
+except ModuleNotFoundError:
+    from Rsbrute.libs.brute import BruteBaseClass
+    from Rsbrute.config import log_file_path
+
 paramiko.util.log_to_file(log_file_path.joinpath("paramiko.log"))
 
 class SshBruteForce(BruteBaseClass):

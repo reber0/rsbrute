@@ -9,7 +9,11 @@
 
 from pymemcache.client.base import Client
 from concurrent.futures import ThreadPoolExecutor
-from libs.brute import BruteBaseClass
+
+try:
+    from libs.brute import BruteBaseClass
+except ModuleNotFoundError:
+    from Rsbrute.libs.brute import BruteBaseClass
 
 
 class MemcacheBruteForce(BruteBaseClass):

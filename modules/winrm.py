@@ -4,13 +4,17 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-12-26 14:00:25
-@LastEditTime: 2020-01-02 12:51:50
+@LastEditTime : 2020-02-16 18:39:04
 '''
 
 import socket
 import winrm
 from concurrent.futures import ThreadPoolExecutor
-from libs.brute import BruteBaseClass
+
+try:
+    from libs.brute import BruteBaseClass
+except ModuleNotFoundError:
+    from Rsbrute.libs.brute import BruteBaseClass
 
 
 class WinrmBruteForce(BruteBaseClass):
