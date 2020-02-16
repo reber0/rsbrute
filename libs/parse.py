@@ -4,16 +4,22 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-26 00:10:17
-@LastEditTime: 2019-12-31 12:58:47
+@LastEditTime : 2020-02-16 18:20:14
 '''
 
 import re
 import socket
 from IPy import IP
 
-from libs.utils import file_is_exist
-from libs.mylog import MyLog
-from config import log_level
+try:
+    from libs.utils import file_is_exist
+    from libs.mylog import MyLog
+    from config import log_level
+except ModuleNotFoundError:
+    from Rsbrute.libs.utils import file_is_exist
+    from Rsbrute.libs.mylog import MyLog
+    from Rsbrute.config import log_level
+
 logger = MyLog(loglevel=log_level, logger_name="check parames")
 
 import argparse

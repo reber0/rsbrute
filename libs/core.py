@@ -4,12 +4,17 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-27 15:57:41
-@LastEditTime: 2019-12-26 15:15:01
+@LastEditTime : 2020-02-16 18:18:26
 '''
 
-from .utils import get_content
-from libs.parse import ParseTarget
-from config import dict_path
+try:
+    from libs.utils import get_content
+    from libs.parse import ParseTarget
+    from config import dict_path
+except ModuleNotFoundError:
+    from Rsbrute.libs.utils import get_content
+    from Rsbrute.libs.parse import ParseTarget
+    from Rsbrute.config import dict_path
 
 class ComHostPortUserPwd(object):
     """生成目标列表:[(host,port,user,pwd),(host,port,user,pwd)]"""

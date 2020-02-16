@@ -4,15 +4,20 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-25 23:57:35
-@LastEditTime: 2019-12-24 18:32:05
+@LastEditTime : 2020-02-16 18:30:36
 '''
 
 import time
 import importlib
-from libs.mylog import MyLog
-from config import log_file_path
-from config import log_level
 
+try:
+    from libs.mylog import MyLog
+    from config import log_file_path
+    from config import log_level
+except ModuleNotFoundError:
+    from Rsbrute.libs.mylog import MyLog
+    from Rsbrute.config import log_file_path
+    from Rsbrute.config import log_level
 
 log_file = log_file_path.joinpath("{}.log".format(time.strftime("%Y-%m-%d", time.localtime())))
 
@@ -40,7 +45,10 @@ class LoadModule(object):
         "根据 service_type 加载对应的模块"
         fname = self.service_type
         self.logger.info("Start brute {} ...".format(fname))
-        module = importlib.import_module("."+fname, package="modules")
+        try:
+            module = importlib.import_module("."+fname, package="modules")
+        except ModuleNotFoundError:
+            module = importlib.import_module(".modules."+fname, package="Rsbrute")
         module.hook_msg = self.hook_msg
 
         return module.bruter
