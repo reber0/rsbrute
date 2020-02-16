@@ -100,3 +100,38 @@ Examples:
 [22:27:18] [-] 10.11.11.11 22 reber mysql 
 [('10.11.11.11', 22, 'reber', '123456')]
 ```
+
+### 引用
+将源码放到 src 中，然后将 src 添加到 sys.path
+
+```
+[18:02 reber@wyb at ~/Downloads/tmp]
+➜  ls
+src     test.py
+[18:02 reber@wyb at ~/Downloads/tmp]
+➜  ls src
+Rsbrute
+```
+
+test.py 内容: 
+
+```
+import sys
+import pathlib
+root_abspath = pathlib.Path(__file__).parent.resolve()
+module_path = root_abspath.joinpath("src")
+
+sys.path.append(str(module_path))
+
+
+from Rsbrute import ComHostPortUserPwd
+from Rsbrute import LoadModule
+
+args = {"host":"59.108.35.198", "port":22, "service_type":"ssh", "user":"reber", "pwd_file":"a.txt"}
+chpup = ComHostPortUserPwd(args)
+hpup = chpup.generate()
+# print(hpup)
+
+lm = LoadModule(args)
+result = lm.start_brute(hpup)
+```
