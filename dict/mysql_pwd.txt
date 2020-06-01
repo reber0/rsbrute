@@ -45,8 +45,6 @@ test123456
 q1w2e3r4
 mysql
 web
-%username%
-%null%
 123
 1234
 12345
