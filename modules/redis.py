@@ -4,11 +4,10 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-25 21:11:15
-@LastEditTime : 2020-02-16 18:38:36
+@LastEditTime : 2020-06-01 15:40:17
 '''
 
 import socket
-from concurrent.futures import ThreadPoolExecutor
 
 try:
     from libs.brute import BruteBaseClass
@@ -29,7 +28,7 @@ class RedisBruteForce(BruteBaseClass):
                 result = s.recv(1024)
             except Exception as e:
                 hook_msg((False,host,port,"Anonymous",""))
-                # print("{} {}".format(host,e))
+                # logger.error("{} {}".format(host,e))
             else:
                 if "redis_version".encode() in result:
                     hook_msg((True,host,port,"Anonymous",""))
@@ -39,7 +38,8 @@ class RedisBruteForce(BruteBaseClass):
 
     def worker(self,hpup):
         if self.flag:
-            host,port,user,pwd = hpup
+            host, port, user, pwd = hpup
+            # print(hpup)
             data = "AUTH {}\r\n".format(pwd)
             try:
                 socket.setdefaulttimeout(self.timeout)
@@ -47,12 +47,18 @@ class RedisBruteForce(BruteBaseClass):
                 s.connect((host, port))
                 s.send(data.encode())
                 result = s.recv(1024)
+                # print(result)
             except Exception as e:
-                hook_msg((False,host,port,user,pwd))
-                # logger.error("{} {}".format(host,e))
-            finally:
+                hook_msg((False, host, port, user, pwd))
+                logger.error("{} {}".format(host, e))
+            else:
                 if "+OK".encode() in result:
-                    hook_msg((True,host,port,"",pwd))
+                    hook_msg((True, host, port, "", pwd))
+                elif b"invalid password" in result:
+                    hook_msg((False, host, port, "", pwd))
+            finally:
+                s.close()
+
 
 
 bruter = RedisBruteForce
