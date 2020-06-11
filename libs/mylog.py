@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-07-16 22:31:00
-@LastEditTime : 2020-05-10 03:29:00
+@LastEditTime : 2020-06-11 10:27:23
 '''
 
 import logging
@@ -32,7 +32,7 @@ class MyLog(object):
         # 创建 file hander
         if logfile:
             fh = self.__file_hander(logfile)
-            if not self.logger.handlers: # 如果 handler 没有时才添加，为了解决日志重复问题
+            if len(self.logger.handlers) == 1: # 解决日志重复问题
                 self.logger.addHandler(fh)
 
     def __file_hander(self, logfile):
