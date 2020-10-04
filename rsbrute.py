@@ -9,29 +9,37 @@
 
 import sys
 sys.dont_write_bytecode = True  # 不生成pyc文件
+import pathlib
 
-from libs.parse import Parser
-from libs.core import ComHostPortUserPwd
-from libs.module import LoadModule
+def main():
+    # 将 rsbrute 添加到 sys.path 里
+    # root_abspath = pathlib.Path(__file__).resolve()
+    # code_path = root_abspath.parent.joinpath("rsbrute")
+    src_path = pathlib.Path("/Users/reber/Downloads/Rsbrute")
+    code_path = src_path.joinpath("rsbrute")
+    sys.path.insert(0, str(src_path))
 
+    from rsbrute.libs.data import config
+    config.code_path = code_path
 
-def run():
-    args = Parser().init()
-    # print(args)
+    from rsbrute.libs.initialize import init_logger
+    from rsbrute.libs.initialize import init_options
+    init_logger()
+    init_options()
 
-    #得到 payload [(ip,port,user,pwd), (ip,port,user,pwd)]
-    chpup = ComHostPortUserPwd(args)
-    hpup = chpup.generate()
-    # print(hpup)
+    config.logger.info("Start brute {} ...".format(config.service_type))
 
-    # load 模块开始爆破
-    lm = LoadModule(args)
-    result = lm.start_brute(hpup)
+    from rsbrute import GeneratePayload
+    gen_payload = GeneratePayload()
+    gen_payload.run()
+    payloads = gen_payload.payloads
+
+    from rsbrute import MainBrute
+    main_brute = MainBrute(payloads)
+    main_brute.start_brute()
+    result = main_brute.result
+
     print(result)
 
-
-if __name__ == "__main__":
-    run()
-
-        # target = {"host":'59.108.35.198',"service_type":'ssh',""}
-        # chpup = ComHostPortUserPwd(args=target)
+if __name__ == '__main__':
+    main()
