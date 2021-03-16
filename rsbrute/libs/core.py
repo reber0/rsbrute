@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-27 15:57:41
-@LastEditTime : 2020-02-16 18:18:26
+@LastEditTime : 2021-03-16 15:27:25
 '''
 
 import importlib
@@ -19,6 +19,7 @@ service_port_dict = {
     "mysql":3306, "mssql":1433, "oracle":1521, "pgsql":5432, "redis":6379, "mongodb":27017, "memcache":11211,
     "ldap":389, "winrm":5985, "vnc":5901, "rdp":3389, "smb":445, "snmp":161,
     "smtp":25, "pop":110,
+    "tomcat":443,
 }
 
 def guess_sid(host, port):

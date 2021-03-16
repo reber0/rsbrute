@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-26 00:10:17
-@LastEditTime : 2020-02-16 18:20:14
+@LastEditTime : 2021-03-16 14:23:22
 '''
 
 import re
@@ -27,6 +27,7 @@ class ParserCmd(object):
             "mysql","mssql","oracle","pgsql","redis","mongodb","memcache",
             "ldap","winrm", #"vnc","rdp","smb","snmp"
             # "smpt","pop",
+            "tomcat",
         ]
         example = """Examples:
                           \r  python3 {shell_name} -s ssh -i 59.108.35.123
