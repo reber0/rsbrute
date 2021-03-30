@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-25 21:10:49
-@LastEditTime: 2019-12-31 12:31:35
+@LastEditTime : 2021-03-30 11:19:36
 '''
 
 import sys
@@ -13,10 +13,11 @@ import pathlib
 
 def main():
     # 将 rsbrute 添加到 sys.path 里
-    # root_abspath = pathlib.Path(__file__).resolve()
-    # code_path = root_abspath.parent.joinpath("rsbrute")
-    src_path = pathlib.Path("/Users/reber/Downloads/Rsbrute")
+    root_abspath = pathlib.Path(__file__).resolve()
+    src_path = root_abspath.parent
     code_path = src_path.joinpath("rsbrute")
+    # src_path = pathlib.Path("/Users/reber/Pentest/tools/Rsbrute")
+    # code_path = src_path.joinpath("rsbrute")
     sys.path.insert(0, str(src_path))
 
     from rsbrute.libs.data import config
