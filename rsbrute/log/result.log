@@ -1,9 +1,0 @@
-2020-10-04 19:38:54,567 | INFO     | __main__:main:28 - Start brute mysql ...
-2020-10-04 19:38:54,568 | INFO     | rsbrute.libs.core:run:96 - Generate 1 payload (host_port_list:1, user_pwd_list:1)
-2020-10-04 19:38:54,616 | ERROR    | rsbrute.libs.core:hook_msg:215 - [*] 10.11.11.7:3306 root root
-2020-10-04 19:49:30,104 | INFO     | __main__:main:28 - Start brute mysql ...
-2020-10-04 19:49:30,106 | INFO     | rsbrute.libs.core:run:96 - Generate 1 payload (host_port_list:1, user_pwd_list:1)
-2020-10-04 19:49:30,159 | ERROR    | rsbrute.libs.core:hook_msg:215 - [*] 10.11.11.7:3306 root root
-2020-10-04 19:54:38,534 | INFO     | __main__:main:30 - Start brute mysql ...
-2020-10-04 19:54:38,535 | INFO     | rsbrute.libs.core:run:96 - Generate 1 payload (host_port_list:1, user_pwd_list:1)
-2020-10-04 19:54:38,588 | ERROR    | rsbrute.libs.core:hook_msg:215 - [*] 10.11.11.7:3306 root root

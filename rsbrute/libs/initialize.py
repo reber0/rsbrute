@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-09-23 15:55:43
-@LastEditTime : 2020-09-23 15:55:43
+@LastEditTime : 2021-03-30 11:30:59
 '''
 import sys
 import pathlib
@@ -21,9 +21,8 @@ def init_logger():
     """
 
     # 设置日志路径
-    # config.log_file_path = config.root_abspath.joinpath("log/runtime_{time:YYYY-MM-DD}.log")
-    config.log_file_path = config.code_path.joinpath("log/result.log")
-    config.err_log_file_path = config.code_path.joinpath("log/error.log")
+    config.log_file_path = config.src_path.joinpath("log/runtime_{time:YYYY-MM-DD}.log")
+    config.err_log_file_path = config.src_path.joinpath("log/err_{time:YYYY-MM-DD}.log")
 
     # 初始化日志
     logger.remove()

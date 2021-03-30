@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-25 21:10:49
-@LastEditTime : 2021-03-30 11:19:36
+@LastEditTime : 2021-03-30 11:26:55
 '''
 
 import sys
@@ -21,6 +21,7 @@ def main():
     sys.path.insert(0, str(src_path))
 
     from rsbrute.libs.data import config
+    config.src_path = src_path
     config.code_path = code_path
 
     from rsbrute.libs.initialize import init_logger
