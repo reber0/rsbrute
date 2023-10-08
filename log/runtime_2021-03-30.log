@@ -1,3 +1,0 @@
-2021-03-30 11:31:32,995 | INFO     | __main__:main:32 - Start brute ssh ...
-2021-03-30 11:31:32,998 | INFO     | rsbrute.libs.core:run:97 - Generate 1550 payload (host_port_list:1, user_pwd_list:1550)
-2021-03-30 11:31:41,651 | ERROR    | rsbrute.brute.baseclass:run:55 - user aborted !

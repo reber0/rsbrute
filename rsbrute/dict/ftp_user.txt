@@ -1,4 +1,0 @@
-ftp
-test
-admin
-web
