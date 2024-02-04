@@ -2,7 +2,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2023-10-08 10:59:15
- * @LastEditTime: 2024-02-04 16:33:52
+ * @LastEditTime: 2024-02-04 17:13:09
  */
 package plugins
 
@@ -62,10 +62,17 @@ func (p *SSHBrute) Worker(payload global.Payload) {
 	// 作为客户端连接 SSH 服务器
 	client, err := ssh.Dial("tcp", addr, config)
 	if err != nil {
-		if strings.Contains(err.Error(), "connection reset by peer") {
-			p.Limiter.Take()
-			p.WaitGroup.Add()
-			p.Worker(payload)
+		if strings.Contains(err.Error(), "connection reset by peer") { // 重试一次
+			// 作为客户端连接 SSH 服务器
+			client1, err := ssh.Dial("tcp", addr, config)
+			if err != nil {
+				goutils.Green(fmt.Sprintf("[-] %s:%d %s %s", payload.IP, payload.Port, payload.UserName, payload.PassWord))
+			} else {
+				goutils.Red(fmt.Sprintf("[+] %s:%d %s %s", payload.IP, payload.Port, payload.UserName, payload.PassWord))
+				global.Results = append(global.Results, payload)
+
+				client1.Close()
+			}
 		} else {
 			goutils.Green(fmt.Sprintf("[-] %s:%d %s %s", payload.IP, payload.Port, payload.UserName, payload.PassWord))
 		}
