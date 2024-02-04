@@ -2,7 +2,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2023-10-08 10:49:16
- * @LastEditTime: 2023-10-12 14:57:20
+ * @LastEditTime: 2024-02-04 16:15:22
  */
 package entry
 
@@ -10,8 +10,8 @@ import (
 	"os"
 
 	"github.com/reber0/goutils"
+	"github.com/reber0/rsbrute/core"
 	"github.com/reber0/rsbrute/global"
-	"github.com/reber0/rsbrute/plugins"
 )
 
 // AppInit 初始化
@@ -28,5 +28,5 @@ func AppInit() {
 	global.Payloads = make([]global.Payload, 0, 10000)
 	global.Results = make([]global.Payload, 0, 1000)
 
-	plugins.InitPlugin()
+	core.InitPlugin()
 }

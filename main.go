@@ -2,7 +2,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2023-10-08 10:50:15
- * @LastEditTime: 2024-02-02 18:18:19
+ * @LastEditTime: 2024-02-04 16:04:20
  */
 
 package main
@@ -10,6 +10,7 @@ package main
 import (
 	"embed"
 
+	"github.com/reber0/rsbrute/core"
 	"github.com/reber0/rsbrute/entry"
 	"github.com/reber0/rsbrute/global"
 )
@@ -23,5 +24,5 @@ func main() {
 
 	entry.AppInit()
 
-	entry.Run()
+	core.Run()
 }

@@ -1,4 +1,3 @@
-<null>
 <user>
 <user>123
 <user>1234

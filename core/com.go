@@ -1,10 +1,10 @@
 /*
  * @Author: reber
  * @Mail: reber0ask@qq.com
- * @Date: 2023-10-12 14:50:24
- * @LastEditTime: 2024-02-02 18:19:50
+ * @Date: 2024-02-04 16:06:12
+ * @LastEditTime: 2024-02-04 16:48:25
  */
-package entry
+package core
 
 import (
 	"bytes"
@@ -14,43 +14,7 @@ import (
 
 	"github.com/reber0/goutils"
 	"github.com/reber0/rsbrute/global"
-	"github.com/reber0/rsbrute/plugins"
 )
-
-type IPPort struct {
-	IP   string
-	Port int
-}
-
-type UserPwd struct {
-	UserName string
-	PassWord string
-}
-
-func Run() {
-	// 合成测试 data
-	IPPortList := ComIPPort()
-	UserPwdList := ComUserPwd()
-	for _, IPPort := range IPPortList {
-		for _, UserPwd := range UserPwdList {
-			global.Payloads = append(global.Payloads, global.Payload{
-				IP:       IPPort.IP,
-				Port:     IPPort.Port,
-				UserName: UserPwd.UserName,
-				PassWord: UserPwd.PassWord,
-			})
-		}
-	}
-
-	// 调用插件
-	plugins.ExecPlugin(global.Option.ServiceType)
-
-	// 输出结果
-	goutils.Red("结果：")
-	for _, result := range global.Results {
-		fmt.Printf("%s:%d %s %s\n", result.IP, result.Port, result.UserName, result.PassWord)
-	}
-}
 
 // 合成 ip、port
 func ComIPPort() []IPPort {
@@ -92,12 +56,40 @@ func ComUserPwd() []UserPwd {
 	switch {
 	case global.Option.User != "" && global.Option.Pwd != "":
 		UserPwdList = append(UserPwdList, UserPwd{UserName: global.Option.User, PassWord: global.Option.Pwd})
+	case global.Option.User != "" && global.Option.Pwd == "":
+		var pwdList []string
+		dataPwd, err := global.Dict.ReadFile("dict/" + global.Option.ServiceType + "_pwd.txt")
+		if err != nil {
+			global.Log.Error(err.Error())
+		}
+		dataPwd = bytes.ReplaceAll(dataPwd, []byte("\r\n"), []byte("\n"))
+		for _, line := range bytes.Split(dataPwd, []byte("\n")) {
+			pwdList = append(pwdList, string(line))
+		}
+
+		for _, pwd := range pwdList {
+			pwd = strings.ReplaceAll(pwd, "<user>", global.Option.User)
+			UserPwdList = append(UserPwdList, UserPwd{UserName: global.Option.User, PassWord: pwd})
+		}
+	case global.Option.User == "" && global.Option.Pwd != "":
+		var userList []string
+		dataUser, err := global.Dict.ReadFile("dict/" + global.Option.ServiceType + "_user.txt")
+		if err != nil {
+			global.Log.Error(err.Error())
+		}
+		dataUser = bytes.ReplaceAll(dataUser, []byte("\r\n"), []byte("\n"))
+		for _, line := range bytes.Split(dataUser, []byte("\n")) {
+			userList = append(userList, string(line))
+		}
+
+		for _, user := range userList {
+			UserPwdList = append(UserPwdList, UserPwd{UserName: user, PassWord: global.Option.Pwd})
+		}
 	case global.Option.User != "" && global.Option.PwdFile != "":
 		{
 			pwdList := goutils.FileEachLineRead(global.Option.PwdFile)
 			for _, pwd := range pwdList {
 				pwd = strings.ReplaceAll(pwd, "<user>", global.Option.User)
-				pwd = strings.ReplaceAll(pwd, "<null>", "")
 				UserPwdList = append(UserPwdList, UserPwd{UserName: global.Option.User, PassWord: pwd})
 			}
 		}
@@ -115,7 +107,6 @@ func ComUserPwd() []UserPwd {
 			for _, user := range userList {
 				for _, pwd := range pwdList {
 					pwd = strings.ReplaceAll(pwd, "<user>", user)
-					pwd = strings.ReplaceAll(pwd, "<null>", "")
 					UserPwdList = append(UserPwdList, UserPwd{UserName: user, PassWord: pwd})
 				}
 			}
@@ -146,7 +137,6 @@ func ComUserPwd() []UserPwd {
 			for _, user := range userList {
 				for _, pwd := range pwdList {
 					pwd = strings.ReplaceAll(pwd, "<user>", user)
-					pwd = strings.ReplaceAll(pwd, "<null>", "")
 					UserPwdList = append(UserPwdList, UserPwd{UserName: user, PassWord: pwd})
 				}
 			}
