@@ -2,7 +2,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2023-10-08 10:54:29
- * @LastEditTime: 2024-02-04 16:19:29
+ * @LastEditTime: 2024-02-05 13:29:08
  */
 package plugins
 
@@ -22,7 +22,7 @@ type MysqlBrute struct {
 	Name      string
 	Limiter   ratelimit.Limiter
 	WaitGroup sizedwaitgroup.SizedWaitGroup
-	UNauthIP  []string // 检测未授权，测试过的 ip 加在这个里面
+	TempIP    []string // 检测未授权，测试过的 ip 加在这个里面
 }
 
 // New
@@ -31,6 +31,7 @@ func NewMysqlBrute(rate int) *MysqlBrute {
 		Name:      "MysqlBrute",
 		Limiter:   ratelimit.New(rate),
 		WaitGroup: sizedwaitgroup.New(rate),
+		TempIP:    make([]string, 0, 10000),
 	}
 }
 
@@ -39,10 +40,10 @@ func (p *MysqlBrute) GetName() string {
 	return p.Name
 }
 
-// Run 全端口扫描插件
+// Run
 func (p *MysqlBrute) Run() {
 	for _, payload := range global.Payloads {
-		if !goutils.IsInCol(p.UNauthIP, payload.IP) {
+		if !goutils.IsInCol(p.TempIP, payload.IP) {
 			p.CheckUNauth(payload)
 		}
 
@@ -73,7 +74,7 @@ func (p *MysqlBrute) Worker(payload global.Payload) {
 }
 
 func (p *MysqlBrute) CheckUNauth(payload global.Payload) {
-	p.UNauthIP = append(p.UNauthIP, payload.IP)
+	p.TempIP = append(p.TempIP, payload.IP)
 
 	for _, UserName := range []string{"root", "test"} {
 		dataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%d)/mysql", UserName, "", payload.IP, payload.Port)

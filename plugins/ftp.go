@@ -2,7 +2,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2023-10-08 10:54:24
- * @LastEditTime: 2024-02-04 15:02:40
+ * @LastEditTime: 2024-02-05 13:42:09
  */
 package plugins
 
@@ -20,7 +20,7 @@ type FtpBrute struct {
 	Name      string
 	Limiter   ratelimit.Limiter
 	WaitGroup sizedwaitgroup.SizedWaitGroup
-	UNauthIP  []string // 检测未授权，测试过的 ip 加在这个里面
+	TempIP    []string // 检测未授权，测试过的 ip 加在这个里面
 }
 
 // New
@@ -29,6 +29,7 @@ func NewFtpBrute(rate int) *FtpBrute {
 		Name:      "FtpBrute",
 		Limiter:   ratelimit.New(rate),
 		WaitGroup: sizedwaitgroup.New(rate),
+		TempIP:    make([]string, 0, 10000),
 	}
 }
 
@@ -37,10 +38,10 @@ func (p *FtpBrute) GetName() string {
 	return p.Name
 }
 
-// Run 全端口扫描插件
+// Run
 func (p *FtpBrute) Run() {
 	for _, payload := range global.Payloads {
-		if !goutils.IsInCol(p.UNauthIP, payload.IP) {
+		if !goutils.IsInCol(p.TempIP, payload.IP) {
 			p.CheckUNauth(payload)
 		}
 
@@ -70,7 +71,7 @@ func (p *FtpBrute) Worker(payload global.Payload) {
 }
 
 func (p *FtpBrute) CheckUNauth(payload global.Payload) {
-	p.UNauthIP = append(p.UNauthIP, payload.IP)
+	p.TempIP = append(p.TempIP, payload.IP)
 
 	// 测试匿名登录
 	conn, err := ftp.Dial(fmt.Sprintf("%s:%d", payload.IP, payload.Port))

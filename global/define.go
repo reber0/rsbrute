@@ -43,6 +43,7 @@ type Payload struct {
 	Port     int
 	UserName string
 	PassWord string
+	Note     string
 }
 
 var (

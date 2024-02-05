@@ -38,7 +38,7 @@ func (p *SSHBrute) GetName() string {
 	return p.Name
 }
 
-// Run 全端口扫描插件
+// Run
 func (p *SSHBrute) Run() {
 	for _, payload := range global.Payloads {
 		p.Limiter.Take()

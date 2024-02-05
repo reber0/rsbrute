@@ -2,7 +2,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2023-10-12 14:50:24
- * @LastEditTime: 2024-02-04 16:15:36
+ * @LastEditTime: 2024-02-05 15:36:03
  */
 package core
 
@@ -31,6 +31,7 @@ func InitPlugin() {
 	registerPlugin("redis", plugins.NewRedisBrute(global.Option.Rate))
 	registerPlugin("mongodb", plugins.NewMongoDBBrute(global.Option.Rate))
 	registerPlugin("ssh", plugins.NewSSHBrute(global.Option.Rate))
+	registerPlugin("oracle", plugins.NewOracleBrute(global.Option.Rate))
 }
 
 // 插件注册
@@ -73,6 +74,7 @@ func Run() {
 	// 输出结果
 	goutils.Red("结果：")
 	for _, result := range global.Results {
-		fmt.Printf("%s:%d %s %s\n", result.IP, result.Port, result.UserName, result.PassWord)
+		res, _ := goutils.Go2JsonStr(result)
+		fmt.Println(res)
 	}
 }

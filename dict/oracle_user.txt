@@ -5,5 +5,3 @@ test
 web
 orcl
 internal
-scott
-Dbsnmp

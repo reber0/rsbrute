@@ -22,7 +22,7 @@ type MongoDBBrute struct {
 	Name      string
 	Limiter   ratelimit.Limiter
 	WaitGroup sizedwaitgroup.SizedWaitGroup
-	UNauthIP  []string // 检测未授权，测试过的 ip 加在这个里面
+	TempIP    []string // 检测未授权，测试过的 ip 加在这个里面
 }
 
 // New
@@ -31,6 +31,7 @@ func NewMongoDBBrute(rate int) *MongoDBBrute {
 		Name:      "MongoDBBrute",
 		Limiter:   ratelimit.New(rate),
 		WaitGroup: sizedwaitgroup.New(rate),
+		TempIP:    make([]string, 0, 10000),
 	}
 }
 
@@ -39,10 +40,10 @@ func (p *MongoDBBrute) GetName() string {
 	return p.Name
 }
 
-// Run 全端口扫描插件
+// Run
 func (p *MongoDBBrute) Run() {
 	for _, payload := range global.Payloads {
-		if !goutils.IsInCol(p.UNauthIP, payload.IP) {
+		if !goutils.IsInCol(p.TempIP, payload.IP) {
 			p.CheckUNauth(payload)
 		}
 
@@ -72,7 +73,7 @@ func (p *MongoDBBrute) Worker(payload global.Payload) {
 }
 
 func (p *MongoDBBrute) CheckUNauth(payload global.Payload) {
-	p.UNauthIP = append(p.UNauthIP, payload.IP)
+	p.TempIP = append(p.TempIP, payload.IP)
 
 	dataSourceName := fmt.Sprintf("mongodb://%s:%d/", payload.IP, payload.Port)
 	opt := options.Client().ApplyURI(dataSourceName)

@@ -2,7 +2,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2023-10-08 10:55:35
- * @LastEditTime: 2024-02-02 17:55:39
+ * @LastEditTime: 2024-02-05 13:42:27
  */
 package plugins
 
@@ -22,7 +22,7 @@ type RedisBrute struct {
 	Name      string
 	Limiter   ratelimit.Limiter
 	WaitGroup sizedwaitgroup.SizedWaitGroup
-	UNauthIP  []string // 检测未授权，测试过的 ip 加在这个里面
+	TempIP    []string // 检测未授权，测试过的 ip 加在这个里面
 }
 
 // New
@@ -31,6 +31,7 @@ func NewRedisBrute(rate int) *RedisBrute {
 		Name:      "RedisBrute",
 		Limiter:   ratelimit.New(rate),
 		WaitGroup: sizedwaitgroup.New(rate),
+		TempIP:    make([]string, 0, 10000),
 	}
 }
 
@@ -41,7 +42,7 @@ func (p *RedisBrute) GetName() string {
 
 func (p *RedisBrute) Run() {
 	for _, payload := range global.Payloads {
-		if !goutils.IsInCol(p.UNauthIP, payload.IP) {
+		if !goutils.IsInCol(p.TempIP, payload.IP) {
 			p.CheckUNauth(payload)
 		}
 
@@ -74,7 +75,7 @@ func (p *RedisBrute) Worker(payload global.Payload) {
 }
 
 func (p *RedisBrute) CheckUNauth(payload global.Payload) {
-	p.UNauthIP = append(p.UNauthIP, payload.IP)
+	p.TempIP = append(p.TempIP, payload.IP)
 
 	opt := redis.Options{
 		Addr:     fmt.Sprintf("%s:%d", payload.IP, payload.Port),
