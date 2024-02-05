@@ -2,7 +2,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2023-10-12 14:50:24
- * @LastEditTime: 2024-02-05 15:46:46
+ * @LastEditTime: 2024-02-05 18:03:04
  */
 package core
 
@@ -33,6 +33,7 @@ func InitPlugin() {
 	registerPlugin("ssh", plugins.NewSSHBrute(global.Option.Rate))
 	registerPlugin("oracle", plugins.NewOracleBrute(global.Option.Rate))
 	registerPlugin("pgsql", plugins.NewPgSQLBrute(global.Option.Rate))
+	registerPlugin("memcache", plugins.NewMemCacheBruteBrute(global.Option.Rate))
 }
 
 // 插件注册
@@ -73,9 +74,13 @@ func Run() {
 	ExecPlugin(global.Option.ServiceType)
 
 	// 输出结果
-	goutils.Red("结果：")
-	for _, result := range global.Results {
-		res, _ := goutils.Go2JsonStr(result)
-		fmt.Println(res)
+	if len(global.Results) > 0 {
+		goutils.Red("结果：")
+		for _, result := range global.Results {
+			res, _ := goutils.Go2JsonStr(result)
+			fmt.Println(res)
+		}
+	} else {
+		goutils.Red("无结果！")
 	}
 }
