@@ -73,8 +73,8 @@ func (p *OracleBrute) Worker(payload global.Payload) {
 
 	for _, sid := range p.SidList[payload.IP] {
 		urlOptions := map[string]string{"SID": sid}
-		dataSourceName := go_ora.BuildUrl(payload.IP, payload.Port, "", payload.UserName, payload.PassWord, urlOptions)
-		db, err := sql.Open("oracle", dataSourceName)
+		connStr := go_ora.BuildUrl(payload.IP, payload.Port, "", payload.UserName, payload.PassWord, urlOptions)
+		db, err := sql.Open("oracle", connStr)
 		if err != nil {
 			log.Fatalln("error:", err)
 		} else {
@@ -100,8 +100,8 @@ func (p *OracleBrute) GuessSid(payload global.Payload) {
 	}
 	for _, sid := range sidSlice {
 		urlOptions := map[string]string{"SID": sid}
-		dataSourceName := go_ora.BuildUrl(payload.IP, payload.Port, "", payload.UserName, payload.PassWord, urlOptions)
-		db, err := sql.Open("oracle", dataSourceName)
+		connStr := go_ora.BuildUrl(payload.IP, payload.Port, "", payload.UserName, payload.PassWord, urlOptions)
+		db, err := sql.Open("oracle", connStr)
 		if err != nil {
 			log.Fatalln("error:", err)
 		} else {
@@ -130,8 +130,8 @@ func (p *OracleBrute) CheckUNauth(payload global.Payload) {
 	for _, sid := range p.SidList[payload.IP] {
 		for _, UserName := range []string{"sys", "test"} {
 			urlOptions := map[string]string{"SID": sid}
-			dataSourceName := go_ora.BuildUrl(payload.IP, payload.Port, "", payload.UserName, "", urlOptions)
-			db, err := sql.Open("oracle", dataSourceName)
+			connStr := go_ora.BuildUrl(payload.IP, payload.Port, "", payload.UserName, "", urlOptions)
+			db, err := sql.Open("oracle", connStr)
 			if err != nil {
 				log.Fatalln("error:", err)
 			} else {

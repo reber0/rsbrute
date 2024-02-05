@@ -2,7 +2,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2023-10-08 10:57:38
- * @LastEditTime: 2024-02-02 17:58:06
+ * @LastEditTime: 2024-02-05 15:41:42
  */
 package plugins
 
@@ -57,8 +57,8 @@ func (p *MongoDBBrute) Run() {
 func (p *MongoDBBrute) Worker(payload global.Payload) {
 	defer p.WaitGroup.Done()
 
-	dataSourceName := fmt.Sprintf("mongodb://%s:%s@%s:%d/", payload.UserName, payload.PassWord, payload.IP, payload.Port)
-	opt := options.Client().ApplyURI(dataSourceName)
+	connStr := fmt.Sprintf("mongodb://%s:%s@%s:%d/", payload.UserName, payload.PassWord, payload.IP, payload.Port)
+	opt := options.Client().ApplyURI(connStr)
 	client, err := mongo.Connect(context.TODO(), opt)
 	if err != nil {
 		goutils.Green(fmt.Sprintf("[-] %s:%d %s %s", payload.IP, payload.Port, payload.UserName, payload.PassWord))
@@ -75,8 +75,8 @@ func (p *MongoDBBrute) Worker(payload global.Payload) {
 func (p *MongoDBBrute) CheckUNauth(payload global.Payload) {
 	p.TempIP = append(p.TempIP, payload.IP)
 
-	dataSourceName := fmt.Sprintf("mongodb://%s:%d/", payload.IP, payload.Port)
-	opt := options.Client().ApplyURI(dataSourceName)
+	connStr := fmt.Sprintf("mongodb://%s:%d/", payload.IP, payload.Port)
+	opt := options.Client().ApplyURI(connStr)
 	client, err := mongo.Connect(context.TODO(), opt)
 	if err != nil {
 		goutils.Green(fmt.Sprintf("[-] %s:%d 空 空", payload.IP, payload.Port))

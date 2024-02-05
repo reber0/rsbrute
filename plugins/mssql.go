@@ -57,8 +57,8 @@ func (p *MSSQLBrute) Run() {
 func (p *MSSQLBrute) Worker(payload global.Payload) {
 	defer p.WaitGroup.Done()
 
-	dataSourceName := fmt.Sprintf("%s:%s@%s:%d?database=master&connection+timeout=10", payload.UserName, payload.PassWord, payload.IP, payload.Port)
-	conn, err := sql.Open("mssql", dataSourceName)
+	connStr := fmt.Sprintf("%s:%s@%s:%d?database=master&connection+timeout=10", payload.UserName, payload.PassWord, payload.IP, payload.Port)
+	conn, err := sql.Open("mssql", connStr)
 	if err != nil {
 		log.Fatalln("error:", err)
 	} else {
@@ -77,8 +77,8 @@ func (p *MSSQLBrute) CheckUNauth(payload global.Payload) {
 	p.TempIP = append(p.TempIP, payload.IP)
 
 	for _, UserName := range []string{"sa", "test"} {
-		dataSourceName := fmt.Sprintf("%s:%s@%s:%d?database=master&connection+timeout=10", UserName, "", payload.IP, payload.Port)
-		conn, err := sql.Open("mssql", dataSourceName)
+		connStr := fmt.Sprintf("%s:%s@%s:%d?database=master&connection+timeout=10", UserName, "", payload.IP, payload.Port)
+		conn, err := sql.Open("mssql", connStr)
 		if err != nil {
 			log.Fatalln("error:", err)
 		} else {

@@ -2,7 +2,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2023-10-12 14:50:24
- * @LastEditTime: 2024-02-05 15:36:03
+ * @LastEditTime: 2024-02-05 15:46:46
  */
 package core
 
@@ -32,6 +32,7 @@ func InitPlugin() {
 	registerPlugin("mongodb", plugins.NewMongoDBBrute(global.Option.Rate))
 	registerPlugin("ssh", plugins.NewSSHBrute(global.Option.Rate))
 	registerPlugin("oracle", plugins.NewOracleBrute(global.Option.Rate))
+	registerPlugin("pgsql", plugins.NewPgSQLBrute(global.Option.Rate))
 }
 
 // 插件注册

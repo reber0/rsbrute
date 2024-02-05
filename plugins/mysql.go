@@ -57,8 +57,8 @@ func (p *MysqlBrute) Run() {
 func (p *MysqlBrute) Worker(payload global.Payload) {
 	defer p.WaitGroup.Done()
 
-	dataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%d)/mysql", payload.UserName, payload.PassWord, payload.IP, payload.Port)
-	db, err := sql.Open("mysql", dataSourceName)
+	connStr := fmt.Sprintf("%s:%s@tcp(%s:%d)/mysql", payload.UserName, payload.PassWord, payload.IP, payload.Port)
+	db, err := sql.Open("mysql", connStr)
 	if err != nil {
 		log.Fatalln("error:", err)
 	} else {
@@ -77,8 +77,8 @@ func (p *MysqlBrute) CheckUNauth(payload global.Payload) {
 	p.TempIP = append(p.TempIP, payload.IP)
 
 	for _, UserName := range []string{"root", "test"} {
-		dataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%d)/mysql", UserName, "", payload.IP, payload.Port)
-		db, err := sql.Open("mysql", dataSourceName)
+		connStr := fmt.Sprintf("%s:%s@tcp(%s:%d)/mysql", UserName, "", payload.IP, payload.Port)
+		db, err := sql.Open("mysql", connStr)
 		if err != nil {
 			log.Fatalln("error:", err)
 		} else {
