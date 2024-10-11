@@ -3,7 +3,6 @@ module github.com/reber0/rsbrute
 go 1.23.2
 
 require (
-	github.com/bradfitz/gomemcache v0.0.0-20230905024940-24af94b03874
 	github.com/denisenkom/go-mssqldb v0.12.3
 	github.com/go-sql-driver/mysql v1.7.1
 	github.com/jlaffaye/ftp v0.2.0
