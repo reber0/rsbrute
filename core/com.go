@@ -32,7 +32,7 @@ func ComIPPort() []IPPort {
 		ipList = goutils.ParseIP(global.Option.IP)
 	}
 	if global.Option.TargetFile != "" {
-		targetList := goutils.FileEachLineRead(global.Option.TargetFile)
+		targetList, _ := goutils.FileEachLineRead(global.Option.TargetFile)
 		for _, target := range targetList {
 			ipList = append(ipList, goutils.ParseIP(target)...)
 		}
@@ -87,7 +87,7 @@ func ComUserPwd() []UserPwd {
 		}
 	case global.Option.User != "" && global.Option.PwdFile != "":
 		{
-			pwdList := goutils.FileEachLineRead(global.Option.PwdFile)
+			pwdList, _ := goutils.FileEachLineRead(global.Option.PwdFile)
 			for _, pwd := range pwdList {
 				pwd = strings.ReplaceAll(pwd, "<user>", global.Option.User)
 				UserPwdList = append(UserPwdList, UserPwd{UserName: global.Option.User, PassWord: pwd})
@@ -95,15 +95,15 @@ func ComUserPwd() []UserPwd {
 		}
 	case global.Option.UserFile != "" && global.Option.Pwd != "":
 		{
-			userList := goutils.FileEachLineRead(global.Option.UserFile)
+			userList, _ := goutils.FileEachLineRead(global.Option.UserFile)
 			for _, user := range userList {
 				UserPwdList = append(UserPwdList, UserPwd{UserName: user, PassWord: global.Option.Pwd})
 			}
 		}
 	case global.Option.UserFile != "" && global.Option.PwdFile != "":
 		{
-			userList := goutils.FileEachLineRead(global.Option.UserFile)
-			pwdList := goutils.FileEachLineRead(global.Option.PwdFile)
+			userList, _ := goutils.FileEachLineRead(global.Option.UserFile)
+			pwdList, _ := goutils.FileEachLineRead(global.Option.PwdFile)
 			for _, user := range userList {
 				for _, pwd := range pwdList {
 					pwd = strings.ReplaceAll(pwd, "<user>", user)
