@@ -4,10 +4,11 @@
  * @Date: 2023-10-08 10:49:16
  * @LastEditTime: 2024-02-04 16:15:22
  */
-package entry
+package initializer
 
 import (
 	"os"
+	"path/filepath"
 
 	"github.com/reber0/goutils"
 	"github.com/reber0/rsbrute/core"
@@ -17,7 +18,17 @@ import (
 // AppInit 初始化
 func AppInit() {
 	global.RootPath, _ = os.Getwd()
-	global.Log = goutils.NewLog().IsShowCaller(true).IsToFile(true).L()
+
+	// data/log 目录
+	logDir := filepath.Join(global.RootPath, "data", "log")
+	os.MkdirAll(logDir, 0755)
+
+	global.Log = goutils.NewLog().
+		SetInfoFile(filepath.Join(logDir, "info.log")).
+		SetErrorFile(filepath.Join(logDir, "error.log")).
+		IsShowCaller(true).
+		IsToFile(true).
+		L()
 	global.Option = &global.Opt{}
 
 	// 解析参数

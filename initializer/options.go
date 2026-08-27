@@ -10,7 +10,7 @@
 // Date: 2023-06-09 15:41:38
 // LastEditTime: 2023-06-13 10:06:22
 
-package entry
+package initializer
 
 import (
 	"flag"

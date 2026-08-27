@@ -11,7 +11,7 @@ import (
 	"embed"
 
 	"github.com/reber0/rsbrute/core"
-	"github.com/reber0/rsbrute/entry"
+	"github.com/reber0/rsbrute/initializer"
 	"github.com/reber0/rsbrute/global"
 )
 
@@ -22,7 +22,7 @@ func main() {
 	// 设置 embed
 	global.Dict = dict
 
-	entry.AppInit()
+	initializer.AppInit()
 
 	core.Run()
 }
